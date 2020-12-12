@@ -13,43 +13,41 @@ class App extends Component {
   };
 
   handleIncrement = (habit) => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    habits[index].count++;
+    const habits = this.state.habits.map(item => {
+      if (item.id === habit.id) {
+        return { ...habit, count: habit.count + 1 };
+      }
+      return item;
+    })
     this.setState({ habits: habits });
   };
 
   handleDecrease = (habit) => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    // habits[index].count--;
-    // if (habits[index].count < 0) habits[index].count = 0
-    const count = habits[index].count - 1;
-    habits[index].count = count < 0 ? 0 : count;
+    const habits = this.state.habits.map(item => {
+      if (item.id === habit.id) {
+        const count = habit.count - 1;
+        return { ...habit, count: count < 0 ? 0 : count };
+      }
+      return item;
+    })
     this.setState({ habits });
   };
 
   handleDelete = (habit) => {
-    // const habits = [...this.state.habits];
-    // const index = habits.indexOf(habit);
-    // habits.splice(index, 1);
     const habits = this.state.habits.filter(itme => itme.id !== habit.id);
     this.setState({ habits });
   };
 
   handleAdd = name => {
-    // const habits = [...this.state.habits]; // 배열의 '요소' 를 복사
-    // const newHabit = { id: habits.length + 1, name: name, count: 0 };
-    // habits.push(newHabit);
     const habits = [...this.state.habits, { id: Date.now(), name, count: 0 }];
     this.setState({ habits });
   };
 
   handleReset = () => {
-    // const habits = [...this.state.habits];
-    // habits.forEach(item => item.count = 0);
     const habits = this.state.habits.map(habit => {
-      habit.count = 0;
+      if (habit.count !== 0) {
+        return { ...habit, count: 0 };
+      }
       return habit;
     });
     this.setState({ habits });
