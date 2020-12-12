@@ -1,6 +1,14 @@
 import React, { PureComponent } from 'react';
 
 class Habit extends PureComponent {
+  componentDidMount() { // vue의 mounted 훅
+    console.log(`habit: ${this.props.habit.name} mounted`);
+  }
+
+  componentWillUnmount() { // vue의 destroyed 훅
+    console.log(`habit: ${this.props.habit.name} will unmount`);
+  }
+
   handleIncrement = () => {
     this.props.onIncrement(this.props.habit);
   };
